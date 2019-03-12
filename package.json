@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/jteich/netrig-frontend/issues"
   },
-  "homepage": "https://github.com/jteich/netrig-frontend#readme"
+  "homepage": "https://github.com/jteich/netrig-frontend#readme",
+  "dependencies": {
+    "webpack": "^4.29.6"
+  }
 }
