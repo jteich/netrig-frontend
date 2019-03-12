@@ -1,0 +1,34 @@
+{
+  "name": "netrig-frontend",
+  "version": "1.0.0",
+  "description": "Web front-end code for the netrig internet-connected radio project",
+  "browser": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-dev": "webpack --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jteich/netrig-frontend.git"
+  },
+  "keywords": [
+    "amateur",
+    "ham",
+    "radio",
+    "transceiver",
+    "rig"
+  ],
+  "author": "Joseph Teichman KD1ZZ",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jteich/netrig-frontend/issues"
+  },
+  "homepage": "https://github.com/jteich/netrig-frontend#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.15.1",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
+  }
+}
