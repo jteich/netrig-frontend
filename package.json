@@ -1,0 +1,26 @@
+{
+  "name": "netrig-frontend",
+  "version": "1.0.0",
+  "description": "Web front-end code for the netrig internet-connected radio project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jteich/netrig-frontend.git"
+  },
+  "keywords": [
+    "amateur",
+    "ham",
+    "radio",
+    "transceiver",
+    "rig"
+  ],
+  "author": "Joseph Teichman KD1ZZ",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jteich/netrig-frontend/issues"
+  },
+  "homepage": "https://github.com/jteich/netrig-frontend#readme"
+}
