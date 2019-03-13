@@ -1,13 +1,13 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { Hello } from "./components/Hello";
+import { App } from "./components/App";
 
 let anchor = document.createElement("DIV");
-anchor.id = "example";
+anchor.id = "app";
 document.getElementsByTagName("body")[0].appendChild(anchor);
 
 ReactDOM.render(
-    <Hello compiler="TypeScript" framework="React" />,
-    document.getElementById("example")
+    <App />,
+    document.getElementById("app")
 );
