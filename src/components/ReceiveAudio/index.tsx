@@ -19,18 +19,16 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         //connection.binaryType
         connection.onopen = () => {console.log("ReceiveAutdio connected");};
         connection.onclose = () => {console.log("ReceiveAutdio connection closed");};
-        connection.onmessage = this.initiateAudio;
+        connection.onmessage = this.processAudio;
     };
 
-    initiateAudio(msg: MessageEvent){
-        console.log("WebSocket message received:", msg);
-        console.log(msg);
-        this.connection.onmessage = this.pushAudioOut;
+    processAudio(msg: MessageEvent){
+        if(this.audioStreamConfig == null){
+            console.log("WebSocket message received:", msg);
+            console.log(msg);
+            console.log(msg.data);
+        }
     }
-
-    pushAudioOut(msg: MessageEvent){
-        //todo
-    };
 
     render() {
         return <div>audio</div>;
