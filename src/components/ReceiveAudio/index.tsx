@@ -19,6 +19,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         //connection.binaryType
         connection.onopen = () => {console.log("ReceiveAutdio connected");};
         connection.onclose = () => {console.log("ReceiveAutdio connection closed");};
+        connection.binaryType = "arraybuffer";
         connection.onmessage = this.processAudio;
     };
 
@@ -28,6 +29,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
             console.log(msg);
             console.log(msg.data);
 
+            /*
             var reader = new FileReader();
             reader.addEventListener("loadend", function() {
             // reader.result contains the contents of blob as a typed array
@@ -36,6 +38,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
                 console.log("cast to i32:", data);
             });
             reader.readAsArrayBuffer(msg.data);
+            */
 
             //let configData = msg.data.slice(0,8);
             let data = new Int32Array(msg.data);
