@@ -27,6 +27,16 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
             console.log("WebSocket message received:", msg);
             console.log(msg);
             console.log(msg.data);
+
+            var reader = new FileReader();
+            reader.addEventListener("loadend", function() {
+            // reader.result contains the contents of blob as a typed array
+                console.log("filereader got:", reader.result);
+                let data = new Int32Array(msg.data);
+                console.log("cast to i32:", data);
+            });
+            reader.readAsArrayBuffer(msg.data);
+
             //let configData = msg.data.slice(0,8);
             let data = new Int32Array(msg.data);
             //let { samplesPerSecond, bitsPerSample } = {data[0], data[1]};
