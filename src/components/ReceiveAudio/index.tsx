@@ -31,7 +31,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
             let data = new Int32Array(msg.data);
             //let { samplesPerSecond, bitsPerSample } = {data[0], data[1]};
             this.audioStreamConfig ={  samplesPerSecond: data[0], bitsPerSample: data[1]};
-            console.log("Audion setup: " + this.audioStreamConfig);
+            console.log("Audion setup: ", this.audioStreamConfig);
         }
     }
 
