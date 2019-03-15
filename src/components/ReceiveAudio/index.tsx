@@ -5,7 +5,7 @@ interface AudioStreamConfig {samplesPerSecond: number; bitsPerSample: number;}
 
 class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
     connection: WebSocket;
-    audioStreamConfig: AudioStreamConfig;
+    audioStreamConfig: AudioStreamConfig = null;
     audioCtx: AudioContext;
     audioDestination: MediaStreamAudioDestinationNode;
     blockCount = 0;
@@ -39,6 +39,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
     }
 
     processAudioConfig(msg: MessageEvent){
+        console.log("processAudionConfig");
         console.log("WebSocket message received:", msg);
         /*
         let data = new Int32Array(msg.data);
@@ -61,7 +62,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         */
          //const currentTime = context.currentTime;
         let data = new Int32Array(msg.data);
-        let buffer = this.audioCtx.createBuffer(1, data.length, this.state.audioStreamConfig.samplesPerSecond);
+        let buffer = this.audioCtx.createBuffer(1, data.length, this.audioStreamConfig.samplesPerSecond);
         let channel = buffer.getChannelData(0);
         for (let i = 0; i < buffer.length; i++) {
             channel[i] = data[i];
