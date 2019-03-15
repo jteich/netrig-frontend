@@ -9,6 +9,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
     audioCtx: AudioContext;
     audioDestination: MediaStreamAudioDestinationNode;
     blockCount = 0;
+    nextTime = 0;
 
     constructor(props: ReceiveAudioProps) {
         super(props);
@@ -111,12 +112,24 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         }
         */
 
+
         const source = this.audioCtx.createBufferSource();
 
         source.buffer = buffer;
 
         source.connect(this.audioCtx.destination);
-        source.start();
+
+        const duration = sampleCount / this.audioStreamConfig.samplesPerSecond;
+        let thisTime: number;
+        if(this.nextTime == 0){
+            thisTime = this.audioCtx.currentTime + duration;
+            //this.nextTime = this.audioCtx.currentTime + 2 * duration;
+        } else {
+            thisTime = this.nextTime;
+        }
+        this.nextTime = thisTime + duration;
+
+        source.start(thisTime);
         //source.start(nextTime, offset);
         //source.stop(nextTime + duration);
     }
