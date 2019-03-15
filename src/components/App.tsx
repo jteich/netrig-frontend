@@ -47,7 +47,7 @@ class App extends React.Component<any, State> {
                     )
                 }
             </select>
-            <input type="button" onClick={() => this.setState({start: true})}>Start</input>
+            <input type="button" onClick={() => this.setState({start: true})} value="Start" />
             {this.state.start && <ReceiveAudio url={"ws://" + host + "/radio/audioOut"}></ReceiveAudio>}
         </div>
     }
