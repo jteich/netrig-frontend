@@ -46,9 +46,6 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         this.audioStreamConfig = { samplesPerSecond: data[0], bitsPerSample: data[1] };
         */
         const dataView = new DataView(msg.data);
-        for(let i = 0; i< msg.data.byteLength; i++){
-            console.log(i, ':', dataView.getInt8(i));
-        }
         this.audioStreamConfig = { samplesPerSecond: dataView.getInt32(0, true), bitsPerSample: dataView.getInt32(4, true) };
         console.log("Audio setup: ", this.audioStreamConfig);
     }
@@ -65,6 +62,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         */
          //const currentTime = context.currentTime;
         let data = new Int32Array(msg.data);
+        debugger;
         let buffer = this.audioCtx.createBuffer(1, data.length, this.audioStreamConfig.samplesPerSecond);
         let channel = buffer.getChannelData(0);
         for (let i = 0; i < buffer.length; i++) {
