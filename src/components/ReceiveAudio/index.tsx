@@ -3,6 +3,8 @@ import * as React from "react";
 export interface ReceiveAudioProps { url: string; }
 interface AudioStreamConfig {samplesPerSecond: number; bitsPerSample: number;}
 
+const START_DELAY = 0.2;
+
 class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
     connection: WebSocket;
     audioStreamConfig: AudioStreamConfig = null;
@@ -52,8 +54,6 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
     }
 
     processAudio(msg: MessageEvent) {
-        console.log("Processing block: " + (this.blockCount++).toString() );
-
         let dataView = new DataView(msg.data);
         let bytesPerSample = this.audioStreamConfig.bitsPerSample / 8;
         let sampleCount = dataView.byteLength  / bytesPerSample;
@@ -90,7 +90,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         const duration = sampleCount / this.audioStreamConfig.samplesPerSecond;
         let thisTime: number;
         if(this.nextTime == 0){
-            thisTime = this.audioCtx.currentTime + duration + 1;
+            thisTime = this.audioCtx.currentTime + duration + START_DELAY;
         } else {
             thisTime = this.nextTime;
         }
