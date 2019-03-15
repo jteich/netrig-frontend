@@ -4,6 +4,7 @@ export interface ReceiveAudioProps { url: string; }
 interface AudioStreamConfig {samplesPerSecond: number; bitsPerSample: number;}
 
 const START_DELAY = 0.2;
+const MIN_DELAY = 0.2;
 
 class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
     connection: WebSocket;
@@ -92,7 +93,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         if(this.nextTime == 0){
             thisTime = this.audioCtx.currentTime + duration + START_DELAY;
         } else {
-            thisTime = Math.min(this.nextTime, this.audioCtx.currentTime);
+            thisTime = this.nextTime > this.audioCtx.currentTime ? this.nextTime : this.audioCtx.currentTime + MIN_DELAY;
         }
         this.nextTime = thisTime + duration;
 
