@@ -80,8 +80,12 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         //source.stop(nextTime + duration);
     }
 
+    handleStopClick(){
+        this.connection.close();
+    }
+
     render() {
-        return <div>audio</div>;
+        return <div>audio<input type="button" value="stop" onClick={() => this.handleStopClick} /></div>;
     }
 }
 export default ReceiveAudio;
