@@ -6,9 +6,16 @@ interface AudioStreamConfig {samplesPerSecond: number; bitsPerSample: number;}
 class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
     connection: WebSocket;
     audioStreamConfig: AudioStreamConfig;
+    audioCtx: AudioContext;
+    audioDestination: MediaStreamAudioDestinationNode;
+    blockCount = 1;
 
     constructor(props: ReceiveAudioProps) {
         super(props);
+
+        this.audioCtx = new AudioContext();
+        this.audioDestination = this.audioCtx.createMediaStreamDestination();
+
         this.initiateConnection();
     };
 
@@ -23,27 +30,46 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         connection.onmessage = this.processAudio;
     };
 
-    processAudio(msg: MessageEvent){
+    handleMessage(msg: MessageEvent){
         if(this.audioStreamConfig == null){
-            console.log("WebSocket message received:", msg);
-            console.log(msg);
-            console.log(msg.data);
-
-            /*
-            var reader = new FileReader();
-            reader.addEventListener("loadend", function() {
-            // reader.result contains the contents of blob as a typed array
-                console.log("filereader got:", reader.result);
-                let data = new Int32Array(msg.data);
-                console.log("cast to i32:", data);
-            });
-            reader.readAsArrayBuffer(msg.data);
-            */
-
-            let data = new Int32Array(msg.data);
-            this.audioStreamConfig = { samplesPerSecond: data[0], bitsPerSample: data[1] };
-            console.log("Audio setup: ", this.audioStreamConfig);
+            this.processAudioConfig(msg);
+        } else {
+            this.processAudio(msg);
         }
+    }
+
+    processAudioConfig(msg: MessageEvent){
+        console.log("WebSocket message received:", msg);
+        let data = new Int32Array(msg.data);
+        this.audioStreamConfig = { samplesPerSecond: data[0], bitsPerSample: data[1] };
+        console.log("Audio setup: ", this.audioStreamConfig);
+    }
+
+    processAudio(msg: MessageEvent) {
+        console.log("Processing block: " + this.blockCount++ );
+        /*
+        let audioBufferLength = msg.data.length / Int32Array.BYTES_PER_ELEMENT;
+        let buffer = this.audioCtx.createBuffer(1, audioBufferLength, this.state.audioStreamConfig.samplesPerSecond);
+        let channel = buffer.getChannelData(0);
+        for(let i = 0; i < audioBufferLength; i++){
+            channel[i] = msg.data[0] + msg.data[1] + msg.data[2] + msg
+        }
+        */
+         //const currentTime = context.currentTime;
+        let data = new Int32Array(msg.data);
+        let buffer = this.audioCtx.createBuffer(1, data.length, this.state.audioStreamConfig.samplesPerSecond);
+        let channel = buffer.getChannelData(0);
+        for (let i = 0; i < buffer.length; i++) {
+            channel[i] = data[i];
+        }
+        const source = this.audioCtx.createBufferSource();
+
+        source.buffer = buffer;
+
+        source.connect(this.audioCtx.destination);
+        source.start();
+        //source.start(nextTime, offset);
+        //source.stop(nextTime + duration);
     }
 
     render() {
