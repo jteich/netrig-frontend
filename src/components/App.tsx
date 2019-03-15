@@ -42,7 +42,7 @@ class App extends React.Component<any, State> {
         let host = window.location.host;
         return <div>
             <h1>Radio Test!</h1>
-            <select onChange={this.handleAudioDeviceChange}>
+            <select onChange={(event) => this.handleAudioDeviceChange(event)}>
                 {
                     this.state.audioCards.map((audioCard)=>
                         <option key={audioCard.name} value={audioCard.name}>{audioCard.name + ':' + audioCard.desc}</option>
