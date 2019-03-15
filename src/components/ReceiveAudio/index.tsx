@@ -17,8 +17,8 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         this.connection = connection;
 
         //connection.binaryType
-        connection.onopen = () => {console.log("ReceiveAutdio connected");};
-        connection.onclose = () => {console.log("ReceiveAutdio connection closed");};
+        connection.onopen = () => {console.log("ReceiveAudio connected");};
+        connection.onclose = () => {console.log("ReceiveAudio connection closed");};
         connection.binaryType = "arraybuffer";
         connection.onmessage = this.processAudio;
     };
@@ -41,7 +41,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
             */
 
             let data = new Int32Array(msg.data);
-            this.audioStreamConfig ={  samplesPerSecond: data[0], bitsPerSample: data[1]};
+            this.audioStreamConfig = { samplesPerSecond: data[0], bitsPerSample: data[1] };
             console.log("Audio setup: ", this.audioStreamConfig);
         }
     }

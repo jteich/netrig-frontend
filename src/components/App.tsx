@@ -30,13 +30,14 @@ class App extends React.Component<any, State> {
 
     render() {
         let host = window.location.host;
-        let audioCards: AudioCard[] = [];
         return <div>
             <h1>Radio Test!</h1>
             <select>
-                {audioCards.map((audioCard)=>{
-                    return <option value={audioCard.name}>{audioCard.name + ':' + audioCard.desc}</option>;
-                })}
+                {
+                    this.state.audioCards.map((audioCard)=>
+                        <option value={audioCard.name}>{audioCard.name + ':' + audioCard.desc}</option>
+                    )
+                }
             </select>
             <ReceiveAudio url={"ws://" + host + "/radio/audioOut"}></ReceiveAudio>
         </div>
