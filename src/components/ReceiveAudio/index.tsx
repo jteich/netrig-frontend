@@ -123,7 +123,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         let thisTime: number;
         if(this.nextTime == 0){
             console.log("current time:", this.audioCtx.currentTime)
-            thisTime = this.audioCtx.currentTime + duration;
+            thisTime = this.audioCtx.currentTime + duration + 1;
             //this.nextTime = this.audioCtx.currentTime + 2 * duration;
         } else {
             thisTime = this.nextTime;
