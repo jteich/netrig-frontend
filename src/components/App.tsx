@@ -28,11 +28,15 @@ class App extends React.Component<any, State> {
             .fail((err: any) => {console.error(err);});
     }
 
+    handleAudioDeviceChange(event: React.ChangeEvent){
+        console.log(event);
+    }
+
     render() {
         let host = window.location.host;
         return <div>
             <h1>Radio Test!</h1>
-            <select>
+            <select onChange={this.handleAudioDeviceChange}>
                 {
                     this.state.audioCards.map((audioCard)=>
                         <option value={audioCard.name}>{audioCard.name + ':' + audioCard.desc}</option>
