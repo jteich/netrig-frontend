@@ -28,8 +28,11 @@ class App extends React.Component<any, State> {
             .fail((err: any) => {console.error(err);});
     }
 
-    handleAudioDeviceChange(event: React.ChangeEvent){
-        console.log(event);
+    handleAudioDeviceChange(event: React.ChangeEvent<HTMLSelectElement>){
+        let selectedDevice = event.target.value;
+        console.log(selectedDevice);
+        jQuery.ajax("/radio/audioDeviceDetails/" + encodeURIComponent(selectedDevice))
+            .then((response: string) => console.log(response));
     }
 
     render() {
@@ -39,7 +42,7 @@ class App extends React.Component<any, State> {
             <select onChange={this.handleAudioDeviceChange}>
                 {
                     this.state.audioCards.map((audioCard)=>
-                        <option value={audioCard.name}>{audioCard.name + ':' + audioCard.desc}</option>
+                        <option key={audioCard.name} value={audioCard.name}>{audioCard.name + ':' + audioCard.desc}</option>
                     )
                 }
             </select>
