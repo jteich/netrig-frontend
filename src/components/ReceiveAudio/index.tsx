@@ -61,6 +61,35 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         }
         */
          //const currentTime = context.currentTime;
+
+        let dataView = new DataView(msg.data);
+        let bytesPerSample = this.audioStreamConfig.bitsPerSample / 8;
+        let sampleCount = dataView.byteLength  / bytesPerSample;
+        let buffer = this.audioCtx.createBuffer(1, sampleCount, this.audioStreamConfig.samplesPerSecond);
+        let channel = buffer.getChannelData(0);
+        let devisor = 2^(this.audioStreamConfig.bitsPerSample / 2);
+        //let func: (byteOffset: number, littleEndian?: boolean): number => {};
+        let func: any;
+        switch(this.audioStreamConfig.bitsPerSample){
+            case 32:
+                func = dataView.getUint32;
+                break;
+            case 16:
+                func = dataView.getUint16;
+                break;
+            case 8:
+                func = dataView.getUint8;
+                break;
+            //todo handle 24
+            default:
+                throw "Unkonwn audio bitwidth:" +  this.audioStreamConfig.bitsPerSample;
+        }
+        for (let i = 0; i < buffer.length; i++) {
+            channel[i] = func(i * bytesPerSample) / devisor;
+        }
+
+
+        /*
         let data;
         switch(this.audioStreamConfig.bitsPerSample){
             case 32:
@@ -81,6 +110,8 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         for (let i = 0; i < buffer.length; i++) {
             channel[i] = data[i] / devisor;
         }
+        */
+
         const source = this.audioCtx.createBufferSource();
 
         source.buffer = buffer;
