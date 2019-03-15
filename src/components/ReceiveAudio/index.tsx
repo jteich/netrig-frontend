@@ -53,19 +53,13 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
 
     processAudio(msg: MessageEvent) {
         console.log("Processing block: " + (this.blockCount++).toString() );
-        /*
-        let audioBufferLength = msg.data.length / Int32Array.BYTES_PER_ELEMENT;
-        let buffer = this.audioCtx.createBuffer(1, audioBufferLength, this.state.audioStreamConfig.samplesPerSecond);
-        let channel = buffer.getChannelData(0);
-        for(let i = 0; i < audioBufferLength; i++){
-            channel[i] = msg.data[0] + msg.data[1] + msg.data[2] + msg
-        }
-        */
-         //const currentTime = context.currentTime;
 
         let dataView = new DataView(msg.data);
         let bytesPerSample = this.audioStreamConfig.bitsPerSample / 8;
         let sampleCount = dataView.byteLength  / bytesPerSample;
+        if(dataView.byteLength % bytesPerSample !== 0){
+            console.log("offbyte!!!!!");
+        }
         let buffer = this.audioCtx.createBuffer(1, sampleCount, this.audioStreamConfig.samplesPerSecond);
         let channel = buffer.getChannelData(0);
         let devisor = 2^(this.audioStreamConfig.bitsPerSample / 2);
@@ -87,32 +81,6 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         for (let i = 0; i < buffer.length; i++) {
             channel[i] = func.call(dataView , i * bytesPerSample, true) / devisor;
         }
-
-
-        /*
-        let data;
-        switch(this.audioStreamConfig.bitsPerSample){
-            case 32:
-                data = new Int32Array(msg.data);
-                break;
-            case 16:
-                data = new Int16Array(msg.data);
-                break;
-            case 8:
-                data = new Int8Array(msg.data);
-                break;
-            default:
-                throw "Unkonwn audio bitwidth:" +  this.audioStreamConfig.bitsPerSample;
-        }
-        let buffer = this.audioCtx.createBuffer(1, data.length, this.audioStreamConfig.samplesPerSecond);
-        let channel = buffer.getChannelData(0);
-        let devisor = 2^(this.audioStreamConfig.bitsPerSample / 2);
-        for (let i = 0; i < buffer.length; i++) {
-            channel[i] = data[i] / devisor;
-        }
-        */
-
-
         const source = this.audioCtx.createBufferSource();
 
         source.buffer = buffer;
@@ -122,17 +90,13 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         const duration = sampleCount / this.audioStreamConfig.samplesPerSecond;
         let thisTime: number;
         if(this.nextTime == 0){
-            console.log("current time:", this.audioCtx.currentTime)
             thisTime = this.audioCtx.currentTime + duration + 1;
-            //this.nextTime = this.audioCtx.currentTime + 2 * duration;
         } else {
             thisTime = this.nextTime;
         }
         this.nextTime = thisTime + duration;
 
         source.start(thisTime);
-        //source.start(nextTime, offset);
-        //source.stop(nextTime + duration);
     }
 
     handleStopClick(){
