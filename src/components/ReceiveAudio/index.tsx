@@ -84,7 +84,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
                 throw "Unkonwn audio bitwidth:" +  this.audioStreamConfig.bitsPerSample;
         }
         for (let i = 0; i < buffer.length; i++) {
-            channel[i] = func.call(dataView , i * bytesPerSample, false) / devisor;
+            channel[i] = func.call(dataView , i * bytesPerSample, true) / devisor;
         }
 
 
