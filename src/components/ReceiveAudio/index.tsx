@@ -73,7 +73,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
                 data = new Int8Array(msg.data);
                 break;
             default:
-                throw "Unkonwn audio bitwidth:" + this.audioStreamConfig.bitsPerSample;
+                throw "Unkonwn audio bitwidth:" +  this.audioStreamConfig.bitsPerSample;
         }
         let buffer = this.audioCtx.createBuffer(1, data.length, this.audioStreamConfig.samplesPerSecond);
         let channel = buffer.getChannelData(0);
@@ -97,7 +97,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
     }
 
     render() {
-        return <div>audio<input type="button" value="stop" onClick={() => this.handleStopClick} /></div>;
+        return <div>audio<input type="button" value="stop" onClick={() => this.handleStopClick()} /></div>;
     }
 }
 export default ReceiveAudio;
