@@ -20,7 +20,7 @@ interface State{
 class App extends React.Component<any, State> {
     constructor(props: Props){
         super(props)
-        this.state = { audioCards: []; start: false };
+        this.state = { audioCards: [], start: false };
     }
 
     componentDidMount(){
