@@ -40,13 +40,17 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
 
     processAudioConfig(msg: MessageEvent){
         console.log("WebSocket message received:", msg);
+        /*
         let data = new Int32Array(msg.data);
         this.audioStreamConfig = { samplesPerSecond: data[0], bitsPerSample: data[1] };
+        */
+        const dataView = new DataView(msg.data);
+        this.audioStreamConfig = { samplesPerSecond: dataView.getInt32(0), bitsPerSample: dataView.getInt32(0) };
         console.log("Audio setup: ", this.audioStreamConfig);
     }
 
     processAudio(msg: MessageEvent) {
-        console.log("Processing block: " + (this.blockCount++).toString );
+        console.log("Processing block: " + (this.blockCount++).toString() );
         /*
         let audioBufferLength = msg.data.length / Int32Array.BYTES_PER_ELEMENT;
         let buffer = this.audioCtx.createBuffer(1, audioBufferLength, this.state.audioStreamConfig.samplesPerSecond);
