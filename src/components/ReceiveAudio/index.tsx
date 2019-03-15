@@ -79,7 +79,9 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
     }
 
     handleStopClick(){
+        debugger;
         this.connection.close();
+        //this.connection.
     }
 
     render() {
