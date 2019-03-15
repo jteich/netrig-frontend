@@ -27,7 +27,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         connection.onopen = () => {console.log("ReceiveAudio connected");};
         connection.onclose = () => {console.log("ReceiveAudio connection closed");};
         connection.binaryType = "arraybuffer";
-        connection.onmessage = this.processAudio;
+        connection.onmessage = this.handleMessage;
     };
 
     handleMessage(msg: MessageEvent){
