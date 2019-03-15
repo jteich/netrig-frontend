@@ -68,17 +68,16 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         let buffer = this.audioCtx.createBuffer(1, sampleCount, this.audioStreamConfig.samplesPerSecond);
         let channel = buffer.getChannelData(0);
         let devisor = 2^(this.audioStreamConfig.bitsPerSample / 2);
-        //let func: (byteOffset: number, littleEndian?: boolean): number => {};
-        let func: any;
+        let func: (byteOffset: number, littleEndian?: boolean) => {};
         switch(this.audioStreamConfig.bitsPerSample){
             case 32:
-                func = dataView.getUint32;
+                func = dataView.getInt32;
                 break;
             case 16:
-                func = dataView.getUint16;
+                func = dataView.getInt16;
                 break;
             case 8:
-                func = dataView.getUint8;
+                func = dataView.getInt8;
                 break;
             //todo handle 24
             default:
