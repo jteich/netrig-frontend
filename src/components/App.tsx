@@ -1,6 +1,6 @@
 import * as React from "react";
 import ReceiveAudio from "./ReceiveAudio";
-import jquery from "jquery";
+import * as jQuery from "jquery";
 
 interface AudioCard {
     io: string;
@@ -23,7 +23,7 @@ class App extends React.Component<any, State> {
     }
 
     componentDidMount(){
-        jquery.ajax("/radio/audioOutDevices")
+        jQuery.ajax("/radio/audioOutDevices")
             .then((response: AudioCard[]) => {this.setState({audioCards: response});})
             .fail((err: any) => {console.error(err);});
     }
