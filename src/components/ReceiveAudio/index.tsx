@@ -8,7 +8,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
     audioStreamConfig: AudioStreamConfig;
     audioCtx: AudioContext;
     audioDestination: MediaStreamAudioDestinationNode;
-    blockCount = 1;
+    blockCount = 0;
 
     constructor(props: ReceiveAudioProps) {
         super(props);
@@ -46,7 +46,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
     }
 
     processAudio(msg: MessageEvent) {
-        console.log("Processing block: " + this.blockCount++ );
+        console.log("Processing block: " + (this.blockCount++).toString );
         /*
         let audioBufferLength = msg.data.length / Int32Array.BYTES_PER_ELEMENT;
         let buffer = this.audioCtx.createBuffer(1, audioBufferLength, this.state.audioStreamConfig.samplesPerSecond);
