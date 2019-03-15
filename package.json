@@ -28,10 +28,12 @@
   "dependencies": {
     "@types/react": "^16.8.7",
     "@types/react-dom": "^16.8.2",
+    "jquery": "^3.3.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4"
   },
   "devDependencies": {
+    "@types/jquery": "^3.3.29",
     "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.5",
