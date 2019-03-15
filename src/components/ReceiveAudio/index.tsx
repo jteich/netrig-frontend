@@ -36,7 +36,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         } else {
             this.processAudio(msg);
         }
-    }
+    };
 
     processAudioConfig(msg: MessageEvent){
         console.log("processAudionConfig");
@@ -48,7 +48,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         const dataView = new DataView(msg.data);
         this.audioStreamConfig = { samplesPerSecond: dataView.getInt32(0), bitsPerSample: dataView.getInt32(0) };
         console.log("Audio setup: ", this.audioStreamConfig);
-    }
+    };
 
     processAudio(msg: MessageEvent) {
         console.log("Processing block: " + (this.blockCount++).toString() );
@@ -75,7 +75,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         source.start();
         //source.start(nextTime, offset);
         //source.stop(nextTime + duration);
-    }
+    };
 
     render() {
         return <div>audio</div>;
