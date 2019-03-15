@@ -92,7 +92,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         if(this.nextTime == 0){
             thisTime = this.audioCtx.currentTime + duration + START_DELAY;
         } else {
-            thisTime = this.nextTime;
+            thisTime = Math.min(this.nextTime, this.audioCtx.currentTime);
         }
         this.nextTime = thisTime + duration;
 
