@@ -14,12 +14,13 @@ interface Props {
 
 interface State{
     audioCards: AudioCard[];
+    start: boolean;
 };
 
 class App extends React.Component<any, State> {
     constructor(props: Props){
         super(props)
-        this.state = { audioCards: [] };
+        this.state = { audioCards: []; start: false };
     }
 
     componentDidMount(){
@@ -46,7 +47,8 @@ class App extends React.Component<any, State> {
                     )
                 }
             </select>
-            <ReceiveAudio url={"ws://" + host + "/radio/audioOut"}></ReceiveAudio>
+            <input type="button" onClick={() => this.setState({start: true})}>Start</input>
+            {this.state.start && <ReceiveAudio url={"ws://" + host + "/radio/audioOut"}></ReceiveAudio>}
         </div>
     }
 }
