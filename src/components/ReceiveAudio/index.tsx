@@ -122,6 +122,7 @@ class ReceiveAudio extends React.Component<ReceiveAudioProps, any> {
         const duration = sampleCount / this.audioStreamConfig.samplesPerSecond;
         let thisTime: number;
         if(this.nextTime == 0){
+            console.log("current time:", this.audioCtx.currentTime)
             thisTime = this.audioCtx.currentTime + duration;
             //this.nextTime = this.audioCtx.currentTime + 2 * duration;
         } else {
