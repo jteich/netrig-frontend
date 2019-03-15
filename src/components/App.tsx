@@ -15,12 +15,13 @@ interface Props {
 interface State{
     audioCards: AudioCard[];
     start: boolean;
+    selectedAudioOutputCard: string;
 };
 
 class App extends React.Component<any, State> {
     constructor(props: Props){
         super(props)
-        this.state = { audioCards: [], start: false };
+        this.state = { audioCards: [], start: false, selectedAudioOutputCard: null };
     }
 
     componentDidMount(){
@@ -34,6 +35,7 @@ class App extends React.Component<any, State> {
         console.log(selectedDevice);
         jQuery.ajax("/radio/audioDeviceDetails/" + encodeURIComponent(selectedDevice))
             .then((response: string) => console.log(response));
+        this.setState({selectedAudioOutputCard: selectedDevice});
     }
 
     render() {
@@ -48,7 +50,7 @@ class App extends React.Component<any, State> {
                 }
             </select>
             <input type="button" onClick={() => this.setState({start: true})} value="Start" />
-            {this.state.start && <ReceiveAudio url={"ws://" + host + "/radio/audioOut"}></ReceiveAudio>}
+            {this.state.start && <ReceiveAudio url={"ws://" + host + "/radio/audioOut/" + encodeURIComponent(this.state.selectedAudioOutputCard)}></ReceiveAudio>}
         </div>
     }
 }
