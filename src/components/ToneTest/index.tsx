@@ -20,7 +20,7 @@ class ToneTest extends React.Component<any, State> {
     }
 
     sendTone() {
-        if(this.audioCtx === null){
+        if(this.audioCtx == null){
             this.audioCtx = new AudioContext();
         }
 
