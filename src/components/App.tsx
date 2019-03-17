@@ -1,5 +1,6 @@
 import * as React from "react";
 import ReceiveAudio from "./ReceiveAudio";
+import ToneTest from "./ToneTest";
 import * as jQuery from "jquery";
 
 interface AudioCard {
@@ -51,6 +52,9 @@ class App extends React.Component<any, State> {
             </select>
             <input type="button" onClick={() => this.setState({start: true})} value="Start" />
             {this.state.start && <ReceiveAudio url={"ws://" + host + "/radio/audioOut/" + encodeURIComponent(this.state.selectedAudioOutputCard)}></ReceiveAudio>}
+
+            <br/>
+            <ToneTest />
         </div>
     }
 }
